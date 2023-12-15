@@ -10,6 +10,8 @@ require (
 
 require github.com/golang-jwt/jwt/v5 v5.2.0
 
+require github.com/joho/godotenv v1.5.1 // indirect
+
 require (
 	ariga.io/atlas v0.14.1-0.20230918065911-83ad451a4935 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
