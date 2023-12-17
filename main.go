@@ -1,8 +1,8 @@
 package main
 
 import (
-	"mobility-server/app/controller"
-	"mobility-server/app/database"
+	"mobility-server/src/controller"
+	"mobility-server/src/database"
 	"net/http"
 	"time"
 
@@ -11,7 +11,9 @@ import (
 
 func main() {
 	database.InitDatabase()
-	router := gin.Default()
+
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
 
 	api := router.Group("/api")
 
