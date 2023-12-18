@@ -40,13 +40,30 @@ func GetOtp(c *gin.Context) {
 	otp := generateOTP()
 	usersOTP[phone] = otp
 
-	// Send OTP via SMS
+	// TODO: Send OTP via SMS
+
+	// Schedule deletion of OTP after 5 minutes
+	go func() {
+		time.Sleep(5 * time.Minute)
+		// Delete the OTP after 5 minutes
+		delete(usersOTP, phone)
+	}()
+
 	c.JSON(http.StatusOK, gin.H{"message": "sent OTP"})
 }
 
 func VerifyOTP(c *gin.Context) {
+	var requestBody struct {
+		OTP string `json:"otp" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	phoneNumber := c.Query("phone")
-	clientOTP := c.Query("otp")
+	clientOTP := requestBody.OTP
 
 	if phoneNumber == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Phone number is required"})

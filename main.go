@@ -20,7 +20,7 @@ func main() {
 	authRoute := api.Group("/auth")
 	{
 		authRoute.GET("/get-otp", controller.GetOtp)
-		authRoute.GET("/verify-otp", controller.VerifyOTP)
+		authRoute.POST("/verify-otp", controller.VerifyOTP)
 	}
 
 	server := &http.Server{
